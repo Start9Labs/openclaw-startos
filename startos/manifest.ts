@@ -32,7 +32,7 @@ export const manifest = setupManifest({
     arch: architectures,
   },
   alerts: {
-    install: 'Optional alert to display before installing the service',
+    install: null,
     update: null,
     uninstall: null,
     restore: null,

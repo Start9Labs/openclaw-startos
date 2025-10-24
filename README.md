@@ -4,26 +4,26 @@
 
 ## Hello World for StartOS
 
-[Hello World](https://github.com/start9labs/hello-world) is a template service that provides examples of basic StartOS features.
+A bare bones template for bootstrapping packages for StartOS:
 
-This repository contains the source code for building the `.s9pk` package of **Hello World** for [StartOS](https://github.com/Start9Labs/start-os/), enabling installation and updates via the StartOS services system.
+1. Access [hello-world-startos](https://github.com/Start9Labs/hello-world-startos).
 
-## Build environment
+1. Click "Use this template", then "Create new repository". You must be signed into Github to see this button.
 
-For local builds, set up the build environment using the official
-[setup guide](https://staging.docs.start9.com/packaging-guide/environment-setup.html).
+1. Name your repository. The name should be `[service-name]-startos`. For example, `NextCloud` is `nextcloud-startos` and `Lightning Terminal` is `lightning-terminal-startos`.
 
-## Build and install
+1. For the repository description, enter "StartOS package for [Service Name]".
 
-```sh
-git clone https://github.com/Start9Labs/hello-world-startos.git
-cd hello-world-startos
-make
-make install
-```
+1. Make sure the repository is Public.
 
-> Note: Alternatively, sideload the generated `hello-world.s9pk` via **StartOS > Sideload** tab.
+1. Click "Create Repository".
 
-## After install
+## Building from source
 
-On the StartOS device, open **Services > Hello World** and proceed as directed in the service UI.
+1. Set up your [environment](https://staging.docs.start9.com/packaging-guide/environment-setup.html).
+
+1. Clone this repository and `cd` into it.
+
+1. run `make`.
+
+1. The resulting `.s9pk` can be side loaded into StartOS.
