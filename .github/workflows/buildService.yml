@@ -17,7 +17,7 @@ jobs:
         uses: start9labs/sdk@v2
 
       - name: Checkout services repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           submodules: recursive
 
@@ -32,7 +32,7 @@ jobs:
         shell: bash
 
       - name: Upload .s9pk
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.package_id }}.s9pk
           path: ./${{ env.package_id }}.s9pk
