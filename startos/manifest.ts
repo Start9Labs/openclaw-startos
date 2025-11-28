@@ -10,7 +10,7 @@ export const manifest = setupManifest({
   id: 'hello-world',
   title: 'Hello World',
   license: 'MIT',
-  wrapperRepo: 'https://github.com/Start9Labs/hello-world-wrapper',
+  wrapperRepo: 'https://github.com/Start9Labs/hello-world-startos',
   upstreamRepo: 'https://github.com/Start9Labs/hello-world',
   supportSite: 'https://docs.start9.com/',
   marketingSite: 'https://start9.com/',
