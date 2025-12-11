@@ -1,6 +1,8 @@
 # Instructions for Hello World on StartOS
 
-A bare bones template for bootstrapping packages for StartOS:
+Hello World is a bare bones template for bootstrapping packages for StartOS.
+
+## How to use the template
 
 1. Access [hello-world-startos](https://github.com/Start9Labs/hello-world-startos).
 
