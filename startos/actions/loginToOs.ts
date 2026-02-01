@@ -3,17 +3,18 @@ import { startCliConfigYaml } from '../fileModels/startCliConfig.yaml'
 import { SubContainer } from '@start9labs/start-sdk'
 import { appendFile } from 'fs/promises'
 import { T } from '@start9labs/start-sdk'
+import { i18n } from '../i18n'
 
 
 const { InputSpec, Value } = sdk
 
 const inputSpec = InputSpec.of({
   masterPassword: Value.text({
-    name: 'StartOS Master Password',
-    description: 'Your StartOS server master password',
+    name: i18n('StartOS Master Password'),
+    description: i18n('Your StartOS server master password'),
     required: true,
     default: null,
-    placeholder: 'Enter master password',
+    placeholder: i18n('Enter master password'),
     masked: true,
   }),
 })
@@ -22,10 +23,11 @@ export const loginToOs = sdk.Action.withInput(
   'login-to-os',
 
   async ({ effects }) => ({
-    name: 'Login to StartOS',
-    description: 'Authenticate start-cli with your StartOS server',
-    warning:
+    name: i18n('Login to StartOS'),
+    description: i18n('Authenticate start-cli with your StartOS server'),
+    warning: i18n(
       'This will give root access to your StartOS server to this package. Only do this for a server designated for development purposes.',
+    ),
     allowedStatuses: 'any',
     group: null,
     visibility: 'enabled',
@@ -42,7 +44,9 @@ export const loginToOs = sdk.Action.withInput(
 
     if (!host) {
       throw new Error(
-        'No host configured. The host URL is set automatically from the OS IP address.',
+        i18n(
+          'No host configured. The host URL is set automatically from the OS IP address.',
+        ),
       )
     }
 
@@ -74,8 +78,10 @@ export const loginToOs = sdk.Action.withInput(
 
     return {
       version: '1' as const,
-      title: 'Login Successful',
-      message: 'start-cli is now authenticated with your StartOS server.',
+      title: i18n('Login Successful'),
+      message: i18n(
+        'start-cli is now authenticated with your StartOS server.',
+      ),
       result: null,
     }
   },

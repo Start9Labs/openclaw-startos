@@ -1,6 +1,7 @@
 import { randomBytes } from 'crypto'
 import { sdk } from '../sdk'
 import { openclawConfigJson } from '../fileModels/openclawConfig.json'
+import { i18n } from '../i18n'
 
 const { InputSpec } = sdk
 
@@ -10,11 +11,13 @@ export const generateGatewayToken = sdk.Action.withInput(
   'generate-gateway-token',
 
   async ({ effects }) => ({
-    name: 'Generate Gateway Token',
-    description:
+    name: i18n('Generate Gateway Token'),
+    description: i18n(
       'Generate a new token for accessing the OpenClaw Gateway web interface. Running this action will replace any existing token. Copy the token when displayed — it will not be shown again.',
-    warning:
+    ),
+    warning: i18n(
       'This will invalidate any previously generated gateway token. You will need to re-authenticate in the web UI with the new token.',
+    ),
     allowedStatuses: 'any',
     group: null,
     visibility: 'enabled',
@@ -42,14 +45,16 @@ export const generateGatewayToken = sdk.Action.withInput(
 
     return {
       version: '1',
-      title: 'Gateway Token Generated',
-      message: "Copy this token now. It will not be shown again. When the UI is launched for the first time, this key will need to be pasted in     Overview > Gateway Token. Finally click 'Connect'",
+      title: i18n('Gateway Token Generated'),
+      message: i18n(
+        "Copy this token now. It will not be shown again. When the UI is launched for the first time, this key will need to be pasted in     Overview > Gateway Token. Finally click 'Connect'",
+      ),
       result: {
         value: token,
         copyable: true,
         masked: true,
         qr: false,
-        type: 'single'
+        type: 'single',
       },
     }
   },

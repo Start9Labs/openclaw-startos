@@ -5,6 +5,7 @@ import {
   AuthProfilesFile,
 } from '../fileModels/authProfiles.json'
 import { openclawConfigJson } from '../fileModels/openclawConfig.json'
+import { i18n } from '../i18n'
 
 const { InputSpec, Value, Variants } = sdk
 
@@ -12,11 +13,11 @@ const { InputSpec, Value, Variants } = sdk
 
 const anthropicAuthVariants = Variants.of({
   'api-key': {
-    name: 'API Key',
+    name: i18n('API Key'),
     spec: InputSpec.of({
       apiKey: Value.text({
-        name: 'API Key',
-        description: 'Your Anthropic API key from console.anthropic.com',
+        name: i18n('API Key'),
+        description: i18n('Your Anthropic API key from console.anthropic.com'),
         required: true,
         default: null,
         masked: true,
@@ -25,18 +26,20 @@ const anthropicAuthVariants = Variants.of({
     }),
   },
   oauth: {
-    name: 'OAuth (Claude Pro/Max)',
+    name: i18n('OAuth (Claude Pro/Max)'),
     spec: InputSpec.of({
       accessToken: Value.text({
-        name: 'Access Token',
-        description: 'OAuth access token from Claude Pro/Max subscription',
+        name: i18n('Access Token'),
+        description: i18n(
+          'OAuth access token from Claude Pro/Max subscription',
+        ),
         required: true,
         default: null,
         masked: true,
       }),
       refreshToken: Value.text({
-        name: 'Refresh Token',
-        description: 'OAuth refresh token (optional)',
+        name: i18n('Refresh Token'),
+        description: i18n('OAuth refresh token (optional)'),
         required: false,
         default: null,
         masked: true,
@@ -47,11 +50,11 @@ const anthropicAuthVariants = Variants.of({
 
 const openaiAuthVariants = Variants.of({
   'api-key': {
-    name: 'API Key',
+    name: i18n('API Key'),
     spec: InputSpec.of({
       apiKey: Value.text({
-        name: 'API Key',
-        description: 'Your OpenAI API key from platform.openai.com',
+        name: i18n('API Key'),
+        description: i18n('Your OpenAI API key from platform.openai.com'),
         required: true,
         default: null,
         masked: true,
@@ -60,18 +63,20 @@ const openaiAuthVariants = Variants.of({
     }),
   },
   oauth: {
-    name: 'OAuth (ChatGPT Plus)',
+    name: i18n('OAuth (ChatGPT Plus)'),
     spec: InputSpec.of({
       accessToken: Value.text({
-        name: 'Access Token',
-        description: 'OAuth access token from ChatGPT Plus subscription',
+        name: i18n('Access Token'),
+        description: i18n(
+          'OAuth access token from ChatGPT Plus subscription',
+        ),
         required: true,
         default: null,
         masked: true,
       }),
       refreshToken: Value.text({
-        name: 'Refresh Token',
-        description: 'OAuth refresh token (optional)',
+        name: i18n('Refresh Token'),
+        description: i18n('OAuth refresh token (optional)'),
         required: false,
         default: null,
         masked: true,
@@ -99,14 +104,14 @@ const openaiModels = {
 
 const anthropicProviderSpec = InputSpec.of({
   model: Value.select({
-    name: 'Model',
-    description: 'Select the Anthropic model to use',
+    name: i18n('Model'),
+    description: i18n('Select the Anthropic model to use'),
     default: 'claude-sonnet-4-5',
     values: anthropicModels,
   }),
   auth: Value.union({
-    name: 'Authentication',
-    description: 'How to authenticate with Anthropic',
+    name: i18n('Authentication'),
+    description: i18n('How to authenticate with Anthropic'),
     default: 'api-key',
     variants: anthropicAuthVariants,
   }),
@@ -114,14 +119,14 @@ const anthropicProviderSpec = InputSpec.of({
 
 const openaiProviderSpec = InputSpec.of({
   model: Value.select({
-    name: 'Model',
-    description: 'Select the OpenAI model to use',
+    name: i18n('Model'),
+    description: i18n('Select the OpenAI model to use'),
     default: 'gpt-4o',
     values: openaiModels,
   }),
   auth: Value.union({
-    name: 'Authentication',
-    description: 'How to authenticate with OpenAI',
+    name: i18n('Authentication'),
+    description: i18n('How to authenticate with OpenAI'),
     default: 'api-key',
     variants: openaiAuthVariants,
   }),
@@ -131,11 +136,11 @@ const openaiProviderSpec = InputSpec.of({
 
 const primaryVariants = Variants.of({
   anthropic: {
-    name: 'Anthropic (Claude)',
+    name: i18n('Anthropic (Claude)'),
     spec: anthropicProviderSpec,
   },
   openai: {
-    name: 'OpenAI',
+    name: i18n('OpenAI'),
     spec: openaiProviderSpec,
   },
 })
@@ -144,15 +149,15 @@ const primaryVariants = Variants.of({
 
 const fallbackVariants = Variants.of({
   disabled: {
-    name: 'Disabled',
+    name: i18n('Disabled'),
     spec: InputSpec.of({}),
   },
   anthropic: {
-    name: 'Anthropic (Claude)',
+    name: i18n('Anthropic (Claude)'),
     spec: anthropicProviderSpec,
   },
   openai: {
-    name: 'OpenAI',
+    name: i18n('OpenAI'),
     spec: openaiProviderSpec,
   },
 })
@@ -161,15 +166,16 @@ const fallbackVariants = Variants.of({
 
 const inputSpec = InputSpec.of({
   primary: Value.union({
-    name: 'Primary LLM',
-    description: 'Select your primary AI model and provider',
+    name: i18n('Primary LLM'),
+    description: i18n('Select your primary AI model and provider'),
     default: 'anthropic',
     variants: primaryVariants,
   }),
   fallback: Value.union({
-    name: 'Fallback LLM (Optional)',
-    description:
+    name: i18n('Fallback LLM (Optional)'),
+    description: i18n(
       'Select a fallback AI model used when the primary is unavailable (rate limited, auth failure, etc.)',
+    ),
     default: 'disabled',
     variants: fallbackVariants,
   }),
@@ -210,9 +216,10 @@ export const configureApiCredentials = sdk.Action.withInput(
   'configure-api-credentials',
 
   async ({ effects }) => ({
-    name: 'Configure API Credentials',
-    description:
+    name: i18n('Configure API Credentials'),
+    description: i18n(
       'Configure your primary and optional fallback AI model, including provider credentials',
+    ),
     warning: null,
     allowedStatuses: 'any',
     group: null,

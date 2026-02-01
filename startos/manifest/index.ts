@@ -1,5 +1,7 @@
 import { setupManifest } from '@start9labs/start-sdk'
-import { STARTOS_VERSION } from './utils'
+import { i18n } from '../i18n'
+import { short, long } from './i18n'
+import { STARTOS_VERSION } from '../utils'
 
 export const manifest = setupManifest({
   id: 'openclaw',
@@ -12,10 +14,7 @@ export const manifest = setupManifest({
   donationUrl: null,
   docsUrl:
     'https://github.com/Start9Labs/openclaw-startos/blob/master/docs/instructions.md',
-  description: {
-    short: 'Personal AI assistant that runs on your own devices',
-    long: 'OpenClaw is a personal AI assistant framework that feels local, fast, and always-on. It provides a unified control plane (Gateway) that connects to multiple messaging channels (WhatsApp, Telegram, Slack, Discord, Signal, and more), AI models (Claude, ChatGPT), and features voice control, browser automation, and a web-based chat interface.',
-  },
+  description: { short, long },
   volumes: ['main'],
   images: {
     openclaw: {
@@ -30,8 +29,9 @@ export const manifest = setupManifest({
     },
   },
   alerts: {
-    install:
+    install: i18n(
       'Use ONLY with EXTREME Caution! Do NOT install OpenClaw on a server containing important services or data. DO NOT install OpenClaw on a server that has Bitcoin keys i.e. LND or CLN. OpenClaw uses an LLM of your choosing allowing it to run commands based on your prompts. In addition to privacy concerns when using OpenAI or Anthropic, OpenClaw can run destructive commands to uninstall other services, or could even brick your server.',
+    ),
     update: null,
     uninstall: null,
     restore: null,

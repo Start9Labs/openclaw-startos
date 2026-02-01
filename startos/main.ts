@@ -2,9 +2,10 @@ import { readFile, writeFile } from 'fs/promises'
 import { sdk } from './sdk'
 import { uiPort } from './utils'
 import { loginToOs, installRootCA } from './actions/loginToOs'
+import { i18n } from './i18n'
 
 export const main = sdk.setupMain(async ({ effects }) => {
-  console.info('Starting OpenClaw Gateway!')
+  console.info(i18n('Starting OpenClaw Gateway!'))
 
   // Create subcontainer with volume mount for persistent data
   const openclawSub = await sdk.SubContainer.of(
@@ -43,11 +44,11 @@ export const main = sdk.setupMain(async ({ effects }) => {
         },
       },
       ready: {
-        display: 'Web Interface',
+        display: i18n('Web Interface'),
         fn: () =>
           sdk.healthCheck.checkPortListening(effects, uiPort, {
-            successMessage: 'OpenClaw Gateway is ready',
-            errorMessage: 'OpenClaw Gateway is not ready',
+            successMessage: i18n('OpenClaw Gateway is ready'),
+            errorMessage: i18n('OpenClaw Gateway is not ready'),
           }),
         gracePeriod: 20_000,
       },
@@ -64,8 +65,9 @@ export const main = sdk.setupMain(async ({ effects }) => {
           )
           if (result.exitCode !== 0) {
             await sdk.action.createOwnTask(effects, loginToOs, 'important', {
-              reason:
+              reason: i18n(
                 'Login to StartOS to enable start-cli authentication for managing the server',
+              ),
             })
           }
           return null

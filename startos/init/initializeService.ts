@@ -5,6 +5,7 @@ import { defaultAgentId } from '../fileModels/authProfiles.json'
 import { openclawConfigJson } from '../fileModels/openclawConfig.json'
 import { configureApiCredentials } from '../actions/configureApiCredentials'
 import { generateGatewayToken } from '../actions/generateGatewayToken'
+import { i18n } from '../i18n'
 
 export const initializeService = sdk.setupOnInit(async (effects, kind) => {
   // Always update workspace bootstrap files on install and upgrade
@@ -65,14 +66,14 @@ export const initializeService = sdk.setupOnInit(async (effects, kind) => {
   })
 
   // Don't initialize auth profiles - let openclaw handle defaults
-  
+
   // Create a task prompting user to configure API credentials
   await sdk.action.createOwnTask(effects, configureApiCredentials, 'critical', {
-    reason: 'Configure your AI provider credentials to use OpenClaw',
+    reason: i18n('Configure your AI provider credentials to use OpenClaw'),
   })
-  
+
     // Create a task prompting user to generate a gateway token (so they can see it)
     await sdk.action.createOwnTask(effects, generateGatewayToken, 'critical', {
-      reason: 'Generate a gateway token to access the OpenClaw web interface',
+      reason: i18n('Generate a gateway token to access the OpenClaw web interface'),
     })
 })
