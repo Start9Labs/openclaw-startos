@@ -67,9 +67,7 @@ const openaiAuthVariants = Variants.of({
     spec: InputSpec.of({
       accessToken: Value.text({
         name: i18n('Access Token'),
-        description: i18n(
-          'OAuth access token from ChatGPT Plus subscription',
-        ),
+        description: i18n('OAuth access token from ChatGPT Plus subscription'),
         required: true,
         default: null,
         masked: true,
@@ -96,7 +94,7 @@ const anthropicModels = {
 const openaiModels = {
   'gpt-4o': 'GPT-4o',
   'gpt-4o-mini': 'GPT-4o Mini',
-  'o3': 'o3',
+  o3: 'o3',
   'o3-mini': 'o3 Mini',
 }
 
@@ -106,7 +104,7 @@ const anthropicProviderSpec = InputSpec.of({
   model: Value.select({
     name: i18n('Model'),
     description: i18n('Select the Anthropic model to use'),
-    default: 'claude-sonnet-4-5',
+    default: 'claude-opus-4-5',
     values: anthropicModels,
   }),
   auth: Value.union({
@@ -236,51 +234,60 @@ export const configureApiCredentials = sdk.Action.withInput(
     const profiles = authData?.profiles ?? {}
 
     const configData = await openclawConfigJson.read((c) => c).once()
-    const primaryModelId = configData?.agents?.defaults?.model?.primary ?? 'anthropic/claude-sonnet-4-5'
-    const fallbackModelIds = configData?.agents?.defaults?.model?.fallbacks ?? []
+    const primaryModelId =
+      configData?.agents?.defaults?.model?.primary ??
+      'anthropic/claude-sonnet-4-5'
+    const fallbackModelIds =
+      configData?.agents?.defaults?.model?.fallbacks ?? []
 
     const primary = parseModelId(primaryModelId)
-    const anthropicProfile = profiles['anthropic:default'] as AuthProfile | undefined
+    const anthropicProfile = profiles['anthropic:default'] as
+      | AuthProfile
+      | undefined
     const openaiProfile = profiles['openai:default'] as AuthProfile | undefined
 
     // Pre-fill primary
-    const primaryAuth = primary.provider === 'anthropic' ? anthropicProfile : openaiProfile
-    const primaryResult = primary.provider === 'anthropic'
-      ? {
-          selection: 'anthropic' as const,
-          value: {
-            model: primary.model as 'claude-sonnet-4-5',
-            auth: profileToAuthPrefill(primaryAuth),
-          },
-        }
-      : {
-          selection: 'openai' as const,
-          value: {
-            model: primary.model as 'gpt-4o',
-            auth: profileToAuthPrefill(primaryAuth),
-          },
-        }
-
-    // Pre-fill fallback
-    let fallbackResult
-    if (fallbackModelIds.length > 0) {
-      const fallback = parseModelId(fallbackModelIds[0])
-      const fallbackAuth = fallback.provider === 'anthropic' ? anthropicProfile : openaiProfile
-      fallbackResult = fallback.provider === 'anthropic'
+    const primaryAuth =
+      primary.provider === 'anthropic' ? anthropicProfile : openaiProfile
+    const primaryResult =
+      primary.provider === 'anthropic'
         ? {
             selection: 'anthropic' as const,
             value: {
-              model: fallback.model as 'claude-sonnet-4-5',
-              auth: profileToAuthPrefill(fallbackAuth),
+              model: primary.model as 'claude-sonnet-4-5',
+              auth: profileToAuthPrefill(primaryAuth),
             },
           }
         : {
             selection: 'openai' as const,
             value: {
-              model: fallback.model as 'gpt-4o',
-              auth: profileToAuthPrefill(fallbackAuth),
+              model: primary.model as 'gpt-4o',
+              auth: profileToAuthPrefill(primaryAuth),
             },
           }
+
+    // Pre-fill fallback
+    let fallbackResult
+    if (fallbackModelIds.length > 0) {
+      const fallback = parseModelId(fallbackModelIds[0])
+      const fallbackAuth =
+        fallback.provider === 'anthropic' ? anthropicProfile : openaiProfile
+      fallbackResult =
+        fallback.provider === 'anthropic'
+          ? {
+              selection: 'anthropic' as const,
+              value: {
+                model: fallback.model as 'claude-sonnet-4-5',
+                auth: profileToAuthPrefill(fallbackAuth),
+              },
+            }
+          : {
+              selection: 'openai' as const,
+              value: {
+                model: fallback.model as 'gpt-4o',
+                auth: profileToAuthPrefill(fallbackAuth),
+              },
+            }
     } else {
       fallbackResult = { selection: 'disabled' as const, value: {} }
     }
@@ -301,10 +308,7 @@ export const configureApiCredentials = sdk.Action.withInput(
     const primaryAuth = primaryUnion.value?.auth
 
     // Extract auth profile from union input
-    function extractProfile(
-      provider: string,
-      auth: any,
-    ): AuthProfile | null {
+    function extractProfile(provider: string, auth: any): AuthProfile | null {
       if (auth?.selection === 'api-key' && auth.value?.apiKey) {
         return { type: 'token', provider, token: auth.value.apiKey }
       } else if (auth?.selection === 'oauth' && auth.value?.accessToken) {
