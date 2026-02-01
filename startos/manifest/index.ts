@@ -26,17 +26,13 @@ export const manifest = setupManifest({
           },
         },
       },
+      arch: ['x86_64', 'aarch64'],
     },
   },
   alerts: {
     install: i18n(
       'Use ONLY with EXTREME Caution! Do NOT install OpenClaw on a server containing important services or data. DO NOT install OpenClaw on a server that has Bitcoin keys i.e. LND or CLN. OpenClaw uses an LLM of your choosing allowing it to run commands based on your prompts. In addition to privacy concerns when using OpenAI or Anthropic, OpenClaw can run destructive commands to uninstall other services, or could even brick your server.',
     ),
-    update: null,
-    uninstall: null,
-    restore: null,
-    start: null,
-    stop: null,
   },
   dependencies: {},
   // dependencies: {
