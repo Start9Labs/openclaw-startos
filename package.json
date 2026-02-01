@@ -1,12 +1,13 @@
 {
-  "name": "hello-world-startos",
+  "name": "openclaw-startos",
   "scripts": {
     "build": "rm -rf ./javascript && ncc build startos/index.ts -o ./javascript",
     "prettier": "prettier --write startos",
     "check": "tsc --noEmit"
   },
   "dependencies": {
-    "@start9labs/start-sdk": "^0.4.0-beta.46"
+    "@start9labs/start-sdk": "^0.4.0-beta.48",
+    "synapse-startos": "github:Start9Labs/synapse-startos#update/040"
   },
   "devDependencies": {
     "@types/node": "^22.19.0",

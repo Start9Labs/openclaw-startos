@@ -1,2 +1,9 @@
 .git
 .gitmodules
+*.s9pk
+node_modules/
+.DS_Store
+.vscode/
+docker-images
+javascript
+ncc-cache
