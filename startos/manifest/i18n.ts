@@ -18,3 +18,16 @@ export const long = {
   fr_FR:
     "OpenClaw est un framework d'assistant personnel IA qui est local, rapide et toujours disponible. Il fournit un plan de contrôle unifié (Gateway) qui se connecte à plusieurs canaux de messagerie (WhatsApp, Telegram, Slack, Discord, Signal et plus), des modèles d'IA (Claude, ChatGPT), et offre le contrôle vocal, l'automatisation du navigateur et une interface de chat web.",
 }
+
+export const installAlert = {
+  en_US:
+    'Use ONLY with EXTREME Caution! Do NOT install OpenClaw on a server containing important services or data. DO NOT install OpenClaw on a server that has Bitcoin keys i.e. LND or CLN. OpenClaw uses an LLM of your choosing allowing it to run commands based on your prompts. In addition to privacy concerns when using OpenAI or Anthropic, OpenClaw can run destructive commands to uninstall other services, or could even brick your server.',
+  es_ES:
+    '¡Usar SOLO con EXTREMA precaución! NO instale OpenClaw en un servidor que contenga servicios o datos importantes. NO instale OpenClaw en un servidor que tenga claves de Bitcoin, es decir, LND o CLN. OpenClaw utiliza un LLM de su elección que le permite ejecutar comandos basados en sus indicaciones. Además de las preocupaciones de privacidad al usar OpenAI o Anthropic, OpenClaw puede ejecutar comandos destructivos para desinstalar otros servicios o incluso inutilizar su servidor.',
+  de_DE:
+    'NUR mit ÄUSSERSTER Vorsicht verwenden! Installieren Sie OpenClaw NICHT auf einem Server mit wichtigen Diensten oder Daten. Installieren Sie OpenClaw NICHT auf einem Server mit Bitcoin-Schlüsseln, z.B. LND oder CLN. OpenClaw verwendet ein LLM Ihrer Wahl und kann Befehle basierend auf Ihren Eingaben ausführen. Neben Datenschutzbedenken bei der Nutzung von OpenAI oder Anthropic kann OpenClaw destruktive Befehle ausführen, andere Dienste deinstallieren oder sogar Ihren Server unbrauchbar machen.',
+  pl_PL:
+    'Używaj TYLKO z NAJWYŻSZĄ ostrożnością! NIE instaluj OpenClaw na serwerze zawierającym ważne usługi lub dane. NIE instaluj OpenClaw na serwerze z kluczami Bitcoin, tj. LND lub CLN. OpenClaw używa wybranego przez Ciebie LLM, umożliwiając uruchamianie poleceń na podstawie Twoich podpowiedzi. Oprócz obaw o prywatność przy korzystaniu z OpenAI lub Anthropic, OpenClaw może uruchamiać destrukcyjne polecenia, odinstalowywać inne usługi, a nawet uszkodzić serwer.',
+  fr_FR:
+    "Utilisez UNIQUEMENT avec une EXTRÊME prudence ! N'installez PAS OpenClaw sur un serveur contenant des services ou des données importants. N'installez PAS OpenClaw sur un serveur contenant des clés Bitcoin, c'est-à-dire LND ou CLN. OpenClaw utilise un LLM de votre choix lui permettant d'exécuter des commandes basées sur vos instructions. En plus des préoccupations de confidentialité lors de l'utilisation d'OpenAI ou Anthropic, OpenClaw peut exécuter des commandes destructrices pour désinstaller d'autres services, ou même rendre votre serveur inutilisable.",
+}

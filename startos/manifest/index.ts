@@ -1,6 +1,5 @@
 import { setupManifest } from '@start9labs/start-sdk'
-import { i18n } from '../i18n'
-import { short, long } from './i18n'
+import { short, long, installAlert } from './i18n'
 import { STARTOS_VERSION } from '../utils'
 
 export const manifest = setupManifest({
@@ -30,9 +29,7 @@ export const manifest = setupManifest({
     },
   },
   alerts: {
-    install: i18n(
-      'Use ONLY with EXTREME Caution! Do NOT install OpenClaw on a server containing important services or data. DO NOT install OpenClaw on a server that has Bitcoin keys i.e. LND or CLN. OpenClaw uses an LLM of your choosing allowing it to run commands based on your prompts. In addition to privacy concerns when using OpenAI or Anthropic, OpenClaw can run destructive commands to uninstall other services, or could even brick your server.',
-    ),
+    install: installAlert,
   },
   dependencies: {},
   // dependencies: {
