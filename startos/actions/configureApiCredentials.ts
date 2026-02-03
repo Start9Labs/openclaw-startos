@@ -4,7 +4,7 @@ import {
   AuthProfile,
   AuthProfilesFile,
 } from '../fileModels/authProfiles.json'
-import { openclawConfigJson } from '../fileModels/openclawConfig.json'
+import { openclawJson } from '../fileModels/openclaw.json'
 import { i18n } from '../i18n'
 
 const { InputSpec, Value, Variants } = sdk
@@ -233,10 +233,10 @@ export const configureApiCredentials = sdk.Action.withInput(
       .once()) as AuthProfilesFile | null
     const profiles = authData?.profiles ?? {}
 
-    const configData = await openclawConfigJson.read((c) => c).once()
+    const configData = await openclawJson.read((c) => c).once()
     const primaryModelId =
       configData?.agents?.defaults?.model?.primary ??
-      'anthropic/claude-sonnet-4-5'
+      'anthropic/claude-opus-4-5'
     const fallbackModelIds =
       configData?.agents?.defaults?.model?.fallbacks ?? []
 
@@ -254,7 +254,7 @@ export const configureApiCredentials = sdk.Action.withInput(
         ? {
             selection: 'anthropic' as const,
             value: {
-              model: primary.model as 'claude-sonnet-4-5',
+              model: primary.model as 'claude-opus-4-5',
               auth: profileToAuthPrefill(primaryAuth),
             },
           }
@@ -277,7 +277,7 @@ export const configureApiCredentials = sdk.Action.withInput(
           ? {
               selection: 'anthropic' as const,
               value: {
-                model: fallback.model as 'claude-sonnet-4-5',
+                model: fallback.model as 'claude-opus-4-5',
                 auth: profileToAuthPrefill(fallbackAuth),
               },
             }
@@ -362,7 +362,7 @@ export const configureApiCredentials = sdk.Action.withInput(
       fallbacks.push(`${fallbackProvider}/${fallbackUnion.value.model}`)
     }
 
-    await openclawConfigJson.merge(effects, {
+    await openclawJson.merge(effects, {
       agents: {
         defaults: {
           model: { primary, fallbacks },

@@ -1,13 +1,27 @@
-FROM node:22-bookworm
+FROM node:22-bookworm-slim
 
 ARG STARTOS_VERSION
+ARG GH_VERSION=2.67.0
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
+    curl \
+    git \
     jq \
+    python3 \
+    ripgrep \
+    tmux \
+    wget \
     && rm -rf /var/lib/apt/lists/*
+
+# Install GitHub CLI (direct binary)
+RUN ARCH="$(dpkg --print-architecture)" && \
+    curl -fsSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_${ARCH}.tar.gz" \
+    | tar -xz --strip-components=1 -C /usr/local
+
+# Install uv (Python package manager)
+RUN curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin sh
 
 # Install openclaw using the official install script (non-interactive)
 ENV HOME=/opt/openclaw-home

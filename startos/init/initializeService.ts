@@ -1,11 +1,9 @@
 import { randomBytes } from 'crypto'
 import { mkdir } from 'fs/promises'
 import { sdk } from '../sdk'
+import { mainMounts } from '../utils'
 import { defaultAgentId } from '../fileModels/authProfiles.json'
-import { openclawConfigJson } from '../fileModels/openclawConfig.json'
-import { configureApiCredentials } from '../actions/configureApiCredentials'
-import { generateGatewayToken } from '../actions/generateGatewayToken'
-import { i18n } from '../i18n'
+import { openclawJson } from '../fileModels/openclaw.json'
 
 export const initializeService = sdk.setupOnInit(async (effects, kind) => {
   // Always update workspace bootstrap files on install and upgrade
@@ -15,12 +13,7 @@ export const initializeService = sdk.setupOnInit(async (effects, kind) => {
   await sdk.SubContainer.withTemp(
     effects,
     { imageId: 'openclaw' },
-    sdk.Mounts.of().mountVolume({
-      volumeId: 'main',
-      subpath: null,
-      mountpoint: '/data',
-      readonly: false,
-    }),
+    mainMounts(),
     'copy-soul',
     async (subc) => {
       await subc.execFail(
@@ -57,12 +50,11 @@ export const initializeService = sdk.setupOnInit(async (effects, kind) => {
   })
 
   // Generate initial gateway auth token
-  const token = randomBytes(32).toString('hex')
-  await openclawConfigJson.write(effects, {
+  await openclawJson.write(effects, {
     gateway: {
       auth: {
         mode: 'token',
-        token,
+        token: randomBytes(32).toString('hex'),
       },
       controlUi: {
         enabled: true,
@@ -72,7 +64,7 @@ export const initializeService = sdk.setupOnInit(async (effects, kind) => {
     agents: {
       defaults: {
         model: {
-          primary: 'anthropic/claude-sonnet-4-5',
+          primary: 'anthropic/claude-opus-4-5',
           fallbacks: [],
         },
         heartbeat: {
@@ -89,16 +81,4 @@ export const initializeService = sdk.setupOnInit(async (effects, kind) => {
   })
 
   // Don't initialize auth profiles - let openclaw handle defaults
-
-  // Create a task prompting user to configure API credentials
-  await sdk.action.createOwnTask(effects, configureApiCredentials, 'critical', {
-    reason: i18n('Configure your AI provider credentials to use OpenClaw'),
-  })
-
-  // Create a task prompting user to generate a gateway token (so they can see it)
-  await sdk.action.createOwnTask(effects, generateGatewayToken, 'critical', {
-    reason: i18n(
-      'Generate a gateway token to access the OpenClaw web interface',
-    ),
-  })
 })

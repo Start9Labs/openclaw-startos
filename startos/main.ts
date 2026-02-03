@@ -1,6 +1,6 @@
 import { readFile, writeFile } from 'fs/promises'
 import { sdk } from './sdk'
-import { uiPort } from './utils'
+import { uiPort, mainMounts } from './utils'
 import { loginToOs, installRootCA } from './actions/loginToOs'
 import { i18n } from './i18n'
 
@@ -11,12 +11,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
   const openclawSub = await sdk.SubContainer.of(
     effects,
     { imageId: 'openclaw' },
-    sdk.Mounts.of().mountVolume({
-      volumeId: 'main',
-      subpath: null,
-      mountpoint: '/data',
-      readonly: false,
-    }),
+    mainMounts(),
     'openclaw-sub',
   )
 

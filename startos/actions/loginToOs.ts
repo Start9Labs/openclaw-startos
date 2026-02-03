@@ -1,5 +1,6 @@
 import { sdk } from '../sdk'
 import { startCliConfigYaml } from '../fileModels/startCliConfig.yaml'
+import { mainMounts } from '../utils'
 import { SubContainer } from '@start9labs/start-sdk'
 import { appendFile } from 'fs/promises'
 import { T } from '@start9labs/start-sdk'
@@ -54,12 +55,7 @@ export const loginToOs = sdk.Action.withInput(
     const result = await sdk.SubContainer.withTemp(
       effects,
       { imageId: 'openclaw' },
-      sdk.Mounts.of().mountVolume({
-        volumeId: 'main',
-        subpath: null,
-        mountpoint: '/data',
-        readonly: false,
-      }),
+      mainMounts(),
       'start-cli-login',
       async (subc) => {
         await installRootCA(effects, subc)
