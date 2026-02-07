@@ -11,8 +11,7 @@ export const manifest = setupManifest({
   supportSite: 'https://github.com/openclaw/openclaw/issues',
   marketingSite: 'https://github.com/openclaw/openclaw',
   donationUrl: null,
-  docsUrl:
-    'https://github.com/Start9Labs/openclaw-startos/blob/master/docs/instructions.md',
+  docsUrl: 'https://docs.openclaw.ai/',
   description: { short, long },
   volumes: ['main'],
   images: {
