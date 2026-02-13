@@ -2,6 +2,7 @@ FROM node:22-bookworm-slim
 
 ARG STARTOS_VERSION
 ARG GH_VERSION=2.67.0
+ARG OPENCLAW_VERSION=2026.2.12
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -26,7 +27,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin s
 # Install openclaw using the official install script (non-interactive)
 ENV HOME=/opt/openclaw-home
 RUN mkdir -p /opt/openclaw-home && \
-    curl -fsSL https://openclaw.bot/install.sh | bash -s -- --no-prompt --no-onboard
+    curl -fsSL https://openclaw.bot/install.sh | bash -s -- --no-prompt --no-onboard --version "${OPENCLAW_VERSION}"
 
 # Install start-cli from StartOS release
 RUN curl -fsSL "https://github.com/Start9Labs/start-os/releases/download/v${STARTOS_VERSION}/start-cli_$(uname -m)-linux" -o /usr/local/bin/start-cli \
